@@ -1,5 +1,7 @@
 FROM arm32v6/alpine AS build
 
+ADD qemu-arm-static /usr/bin/
+
 RUN apk add --no-cache libc6-compat gcc g++ git go
 RUN go get -u github.com/awslabs/amazon-ecr-credential-helper/ecr-login/cli/docker-credential-ecr-login
 
