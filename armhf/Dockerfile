@@ -9,5 +9,9 @@ RUN ["cross-build-start"]
 RUN apk add --no-cache libc6-compat gcc g++ git go \
 	&& go get -u github.com/awslabs/amazon-ecr-credential-helper/ecr-login/cli/docker-credential-ecr-login
 
-FROM v2tec/watchtower:armhf-latest AS watchtower
+# final image has to be alpine, scratch doesn't support our env vars or credentials file
+FROM arm32v6/alpine
+COPY --from=v2tec/watchtower:armhf-latest / /
 COPY --from=build /root/go/bin/docker-credential-ecr-login /bin/docker-credential-ecr-login
+
+ENTRYPOINT ["/watchtower"]
