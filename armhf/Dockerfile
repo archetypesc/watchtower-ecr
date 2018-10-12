@@ -1,4 +1,4 @@
-FROM alpine AS build
+FROM arm32v6/alpine AS build
 
 RUN apk add --no-cache libc6-compat gcc g++ git go \
 	&& go get -u github.com/awslabs/amazon-ecr-credential-helper/ecr-login/cli/docker-credential-ecr-login
